@@ -1,0 +1,15 @@
+AllCops:
+  DisabledByDefault: true
+  Include:
+    - '**/*.rb'
+  Exclude:
+    - 'vendor/**/*'
+    - 'db/**/*'
+    - 'node_modules/**/*'
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Layout/IndentationStyle:
+  EnforcedStyle: spaces
+  IndentationWidth: 2
