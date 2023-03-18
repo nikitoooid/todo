@@ -26,6 +26,7 @@ group :development, :test do
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+  gem 'factory_bot_rails'
 end
 
 group :development do
