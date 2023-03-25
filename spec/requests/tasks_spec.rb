@@ -32,8 +32,28 @@ RSpec.describe "Tasks", type: :request do
     end
   end
 
-  describe "GET /tasks/:id" do
-    
+  describe "GET /tasks/:id/edit" do
+    context "when the user is authenticated" do
+      before {
+        sign_in(user)
+        get edit_task_path(task)
+      }
+
+      it "returns http success" do
+        expect(response).to have_http_status(:success)
+      end
+  
+      it "renders edit veiw" do
+        expect(response).to render_template :edit
+      end
+    end
+
+    context "when user is not authenticated" do
+      it "redirects to the sign in page" do
+        get edit_task_path(task)
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
   end
 
   describe "GET /tasks/new" do
@@ -79,8 +99,35 @@ RSpec.describe "Tasks", type: :request do
     end
   end
 
-  describe "PATCH /tasks/:id" do
-    
+  describe "PUT /tasks/:id" do
+    context "when the user is authenticated" do
+      before { sign_in(user) }
+
+      context "with valid attributes" do
+        let(:new_task_attributes) { attributes_for(:task, :new) }
+
+        it "updates the task and redirects to the all tasks page" do
+          put task_path(task), params: { task: new_task_attributes }
+          expect(response).to redirect_to(tasks_path)
+          follow_redirect!
+          expect(response.body).to include(new_task_attributes[:title])
+        end
+      end
+
+      context 'with invalid parameters' do
+        it 'renders the edit view' do
+          put task_path(task), params: { task: attributes_for(:task, :invalid) }
+          expect(response).to render_template(:edit)
+        end
+      end
+    end
+
+    context "when user is not authenticated" do
+      it "redirects to the sign in page" do
+        put task_path(task), params: { task: { title: 'New title', description: 'New description' } }
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
   end
 
   describe "DELETE /tasks/:id" do

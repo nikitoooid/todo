@@ -9,5 +9,10 @@ FactoryBot.define do
     trait :invalid do
       title { nil }
     end
+
+    trait :new do
+      title { "New title" }
+      description { "New description" }
+    end
   end
 end
