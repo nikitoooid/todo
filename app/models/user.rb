@@ -5,4 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :tasks, dependent: :destroy
+
+  def is_author_of?(resource)
+    self.id == resource.user_id
+  end
 end

@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "Tasks", type: :request do
   let(:user) { create(:user) }
-  let(:task) { create(:task, user: user) }
+  let!(:task) { create(:task, user: user) }
 
-  describe "GET /index" do
+  describe "GET /tasks" do
     let!(:tasks) { create_list(:task, 3, user: user) }
 
     context "when user is authenticated" do
@@ -32,11 +32,11 @@ RSpec.describe "Tasks", type: :request do
     end
   end
 
-  describe "GET /show" do
+  describe "GET /tasks/:id" do
     
   end
 
-  describe "GET /new" do
+  describe "GET /tasks/new" do
     before do
       sign_in user
       get '/tasks/new'
@@ -51,7 +51,7 @@ RSpec.describe "Tasks", type: :request do
     end
   end
 
-  describe "POST /create" do
+  describe "POST /tasks" do
     before { sign_in user }
 
     context "with valid attributes" do
@@ -77,35 +77,27 @@ RSpec.describe "Tasks", type: :request do
         expect(response).to render_template(:new)
       end
     end
-
-    # context 'with valid attributes' do
-    #   it 'saves a new task to database' do
-    #     expect { post '/tasks', params: { task: attributes_for(:task) } }.to change(Task, :count).by(1)
-    #   end
-
-    #   it 'redirects to index view' do
-    #     post '/tasks', params: { task: attributes_for(:task) }
-    #     expect(response).to redirect_to tasks_path
-    #   end
-    # end
-
-    # context 'with invalid attributes' do
-    #   it 'does not save the task' do
-    #     expect { post '/tasks', params: { task: attributes_for(:task, :invalid) } }.not_to change(Task, :count)
-    #   end
-
-    #   it 're-renders new view' do
-    #     post '/tasks', params: { task: attributes_for(:task, :invalid) }
-    #     expect(response).to render_template :new
-    #   end
-    # end
   end
 
-  describe "PATCH /update" do
+  describe "PATCH /tasks/:id" do
     
   end
 
-  describe "DELETE /destroy" do
-    
+  describe "DELETE /tasks/:id" do
+    context "when user is authenticated" do
+      before { sign_in(user) }
+
+      it "deletes the task" do
+        expect { delete task_path(task) }.to change { user.tasks.count }.by(-1)
+        expect(response).to redirect_to(tasks_path)
+      end
+    end
+
+    context "when user is not authenticated" do
+      it "redirects to the sign in page" do
+        delete task_path(task)
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
   end
 end
