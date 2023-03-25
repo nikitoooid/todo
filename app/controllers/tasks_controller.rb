@@ -1,14 +1,16 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_task, only: [:edit, :update, :destroy]
+  before_action :set_task, only: %i[edit update destroy]
 
   def index
     @tasks = current_user.tasks
   end
-  
+
   def new
     @task = Task.new
   end
+
+  def edit; end
 
   def create
     @task = current_user.tasks.new(task_params)
@@ -18,9 +20,6 @@ class TasksController < ApplicationController
     else
       render :new
     end
-  end
-
-  def edit
   end
 
   def update
@@ -48,8 +47,8 @@ class TasksController < ApplicationController
   end
 
   def validate_permissions(task)
-    unless current_user&.is_author_of?(task)
-      redirect_to tasks_path, alert: 'You are not authorized to perform this action.'
-    end
+    return if current_user&.author_of?(task)
+
+    redirect_to tasks_path, alert: 'You are not authorized to perform this action.'
   end
 end

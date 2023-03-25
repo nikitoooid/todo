@@ -22,11 +22,11 @@ gem 'slim-rails'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'factory_bot_rails'
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
-  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -38,10 +38,10 @@ end
 
 group :test do
   gem 'capybara', '>= 3.26'
+  gem 'rails-controller-testing'
   gem 'selenium-webdriver', '>= 4.0.0.rc1'
   gem 'shoulda-matchers'
   gem 'webdrivers'
-  gem 'rails-controller-testing'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

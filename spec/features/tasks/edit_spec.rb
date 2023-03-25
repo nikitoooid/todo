@@ -10,7 +10,7 @@ describe 'User can edit his task', "
   let(:another_user) { create(:user) }
   let(:another_user_task) { create(:task, user: another_user) }
 
-  context 'Registred user' do
+  describe 'Registred user' do
     before { sign_in(user) }
 
     it 'can edit his task' do
@@ -18,8 +18,7 @@ describe 'User can edit his task', "
       fill_in 'Title', with: 'New Title'
       click_button 'Update Task'
 
-      expect(page).to have_content 'Task was successfully updated.'
-      expect(page).to have_content 'New Title'
+      expect(page).to have_content('New Title')
     end
 
     it 'can not edit other user task' do

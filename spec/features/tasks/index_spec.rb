@@ -13,7 +13,7 @@ describe 'User can see all his tasks', "
     visit tasks_path
 
     tasks.each do |task|
-    	expect(page).to have_content(task.title)
+      expect(page).to have_content(task.title)
     end
   end
 

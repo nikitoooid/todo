@@ -10,7 +10,7 @@ describe 'User can delete his tasks', "
   let(:another_user) { create(:user) }
   let!(:another_user_task) { create(:task, user: another_user) }
 
-  context 'Registred user', js:true do
+  describe 'Registred user', js: true do
     before do
       sign_in(user)
       visit tasks_path
@@ -23,12 +23,12 @@ describe 'User can delete his tasks', "
             click_link 'Delete'
           end
         end
-      
+
         expect(page).to have_content('Task has been deleted.')
         expect(page).not_to have_content(task.title)
       end
     end
-    
+
     it "can't delete other user's tasks" do
       expect(page).not_to have_css("#task_#{another_user_task.id} button", text: 'Delete')
     end

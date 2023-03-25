@@ -11,8 +11,8 @@ FactoryBot.define do
     end
 
     trait :new do
-      title { "New title" }
-      description { "New description" }
+      title { 'New title' }
+      description { 'New description' }
     end
   end
 end

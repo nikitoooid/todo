@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   has_many :tasks, dependent: :destroy
 
-  def is_author_of?(resource)
-    self.id == resource.user_id
+  def author_of?(resource)
+    id == resource.user_id
   end
 end
