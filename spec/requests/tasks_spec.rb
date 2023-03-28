@@ -32,6 +32,30 @@ RSpec.describe 'Tasks' do
     end
   end
 
+  describe 'GET /tasks/:id' do
+    context 'when the user is authenticated' do
+      before do
+        sign_in(user)
+        get task_path(task)
+      end
+
+      it 'returns http success' do
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'renders show veiw' do
+        expect(response).to render_template(:show)
+      end
+    end
+
+    context 'when user is not authenticated' do
+      it 'redirects to the sign in page' do
+        get edit_task_path(task)
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
   describe 'GET /tasks/:id/edit' do
     context 'when the user is authenticated' do
       before do
