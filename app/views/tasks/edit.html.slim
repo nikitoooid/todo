@@ -1,12 +1,6 @@
-= form_with model: @task do |f|
-  
-  p
-    = f.label :title
-    = f.text_field :title
+div.container
+  div.navbar.d-flex
+    h1 Edit task
+    = link_to 'Back to tasks', tasks_path, class: 'btn btn-sm btn-secondary'
 
-  p
-    = f.label :description
-    = f.text_area :description
-
-  p
-    = f.submit 'Update Task'
+  = render partial: 'form', locals: { submit_text: 'Save changes' }

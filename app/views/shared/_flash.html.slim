@@ -1,4 +1,5 @@
-- if notice
-  div.alert.alert-secondary = notice
-- if alert
-  div.alert.alert-warning = alert
+div.container
+  - if notice
+    div.mt-2.mb-2.alert.alert-secondary = notice
+  - if alert
+    div.mt-2.mb-2.alert.alert-warning = alert
