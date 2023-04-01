@@ -9,4 +9,8 @@
     = f.text_area :description, class: 'form-control'
 
   div.mb-3
+    = f.label :due_date, class: 'form-label'
+    = f.date_field :due_date, class: 'form-control'
+
+  div.mb-3
     = f.submit submit_text, class: 'btn btn-primary'
