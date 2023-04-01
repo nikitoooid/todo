@@ -5,11 +5,8 @@ describe 'User can sign up', "
   As an unauthenticated user
   I'd like to be able to sign up
 " do
-  let(:user) { create(:user) }
-
-  before { visit new_user_registration_path }
-
   it 'Unregistred user tries to sign up' do
+    visit new_user_registration_path
     fill_in 'Email', with: 'test@test.com'
     fill_in 'Password', with: 'password'
     fill_in 'Password confirmation', with: 'password'
@@ -19,6 +16,9 @@ describe 'User can sign up', "
   end
 
   it 'Registred user tries to sign up' do
+    user = create(:user)
+
+    visit new_user_registration_path
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
     fill_in 'Password confirmation', with: user.password

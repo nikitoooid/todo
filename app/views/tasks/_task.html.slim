@@ -1,0 +1,5 @@
+li id="task_#{task.id}"
+  span = task.title
+  - if current_user.author_of?(task)
+    = link_to 'Delete', task_path(task), method: :delete, data: { confirm: 'Are you sure?' }
+    = link_to 'Edit', edit_task_path(task)

@@ -1,0 +1,12 @@
+= form_with model: @task do |f|
+  
+  p
+    = f.label :title
+    = f.text_field :title
+
+  p
+    = f.label :description
+    = f.text_area :description
+
+  p
+    = f.submit 'Update Task'
