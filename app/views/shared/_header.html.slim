@@ -1,5 +1,17 @@
-header
-  - if user_signed_in?
-    = button_to "Sign out", destroy_user_session_path, method: :delete
-  - else
-    = link_to "Sign in", new_user_session_path
+nav.navbar.navbar-expand-lg.navbar-light.bg-light
+  div.container-fluid
+    = link_to 'TODO', root_path, class: 'navbar-brand display-2'
+    button.navbar-toggler type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+      span.navbar-toggler-icon
+    
+    div.collapse.navbar-collapse#navbarNav
+      = link_to 'My tasks', tasks_path, class: 'nav-link'
+      span.navbar-text.ms-auto
+        - if user_signed_in?
+          span = current_user.email
+          span.ms-2.me-2 |
+          = link_to 'Sign out', destroy_user_session_path, method: :delete
+        - else
+          = link_to 'Sign in', new_user_session_path
+          span.ms-2.me-2 |
+          = link_to 'Sign up', new_user_registration_path

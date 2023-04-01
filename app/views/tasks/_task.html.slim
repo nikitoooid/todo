@@ -1,5 +1,8 @@
-li id="task_#{task.id}"
-  span = task.title
+li.list-group-item.d-flex id="task_#{task.id}"
+  = link_to task.title, task_path(task), class: 'link-dark text-decoration-none lead'
+
   - if current_user.author_of?(task)
+    span.ms-auto
     = link_to 'Delete', task_path(task), method: :delete, data: { confirm: 'Are you sure?' }
+    span.ms-2.me-2 |
     = link_to 'Edit', edit_task_path(task)

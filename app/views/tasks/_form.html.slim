@@ -1,0 +1,12 @@
+= form_with model: @task do |f|
+    
+  div.mb-3
+    = f.label :title, class: 'form-label'
+    = f.text_field :title, class: 'form-control form-control-lg'
+
+  div.mb-3
+    = f.label :description, class: 'form-label'
+    = f.text_area :description, class: 'form-control'
+
+  div.mb-3
+    = f.submit submit_text, class: 'btn btn-primary'

@@ -1,2 +1,5 @@
-p.notice = notice
-p.alert = alert
+div.container
+  - if notice
+    div.mt-2.mb-2.alert.alert-secondary = notice
+  - if alert
+    div.mt-2.mb-2.alert.alert-warning = alert
