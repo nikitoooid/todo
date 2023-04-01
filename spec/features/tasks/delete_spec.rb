@@ -5,18 +5,14 @@ describe 'User can delete his tasks', "
   As an authenticated user
   I'd like to be able to delete my tasks
 " do
-  let(:user) { create(:user) }
-  let!(:tasks) { create_list(:task, 3, user: user) }
-  let(:another_user) { create(:user) }
-  let!(:another_user_task) { create(:task, user: another_user) }
-
   describe 'Registred user', js: true do
-    before do
+    it 'can delete his tasks' do
+      user = create(:user)
+      tasks = create_list(:task, 3, user: user)
+
       sign_in(user)
       visit tasks_path
-    end
 
-    it 'can delete his tasks' do
       tasks.each do |task|
         within("#task_#{task.id}") do
           accept_confirm do
@@ -30,11 +26,21 @@ describe 'User can delete his tasks', "
     end
 
     it "can't delete other user's tasks" do
+      user = create(:user)
+      another_user = create(:user)
+      another_user_task = create(:task, user: another_user)
+
+      sign_in(user)
+      visit tasks_path
+
       expect(page).not_to have_css("#task_#{another_user_task.id} button", text: 'Delete')
     end
   end
 
   it 'Unregistered user cannot delete any tasks' do
+    user = create(:user)
+    tasks = create_list(:task, 3, user: user)
+
     visit tasks_path
 
     tasks.each do |task|

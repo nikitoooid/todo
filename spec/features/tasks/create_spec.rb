@@ -5,9 +5,8 @@ describe 'User can create a task', "
   As an authenticated user
   I'd like to be able to create a tasks
 " do
-  let(:user) { create(:user) }
-
   it 'Registred user tries to create a task' do
+    user = create(:user)
     sign_in(user)
     visit new_task_path
     fill_in 'Title', with: 'My first task'

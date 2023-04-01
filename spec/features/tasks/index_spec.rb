@@ -5,10 +5,10 @@ describe 'User can see all his tasks', "
   As an authenticated user
   I'd like to be able to see all my tasks
 " do
-  let(:user) { create(:user) }
-  let!(:tasks) { create_list(:task, 3, user: user) }
-
   it 'Registred user see all his tasks' do
+    user = create(:user)
+    tasks = create_list(:task, 3, user: user)
+
     sign_in(user)
     visit tasks_path
 
