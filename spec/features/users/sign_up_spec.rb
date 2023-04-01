@@ -10,7 +10,9 @@ describe 'User can sign up', "
     fill_in 'Email', with: 'test@test.com'
     fill_in 'Password', with: 'password'
     fill_in 'Password confirmation', with: 'password'
-    click_on 'Sign up'
+    within 'main' do
+      click_on 'Sign up'
+    end
 
     expect(page).to have_content 'Welcome! You have signed up successfully.'
   end
@@ -22,7 +24,9 @@ describe 'User can sign up', "
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
     fill_in 'Password confirmation', with: user.password
-    click_on 'Sign up'
+    within 'main' do
+      click_on 'Sign up'
+    end
 
     expect(page).to have_content 'prohibited this user from being saved'
   end
