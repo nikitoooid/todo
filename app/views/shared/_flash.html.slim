@@ -1,2 +1,4 @@
-p.notice = notice
-p.alert = alert
+- if notice
+  div.alert.alert-secondary = notice
+- if alert
+  div.alert.alert-warning = alert
