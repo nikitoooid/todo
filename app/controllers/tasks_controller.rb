@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_task, only: %i[show edit update destroy]
+  before_action :set_task, only: %i[show edit update destroy change_status]
 
   def index
     @tasks = current_user.tasks
@@ -37,10 +37,16 @@ class TasksController < ApplicationController
     redirect_to tasks_path, notice: 'Task has been deleted.'
   end
 
+  def change_status
+    unless @task.change_status
+      redirect_to tasks_path, notice: 'Error in updating.'
+    end
+  end
+
   private
 
   def task_params
-    params.require(:task).permit(:title, :description, :status, :due_date)
+    params.require(:task).permit(:title, :description, :is_done, :due_date)
   end
 
   def set_task

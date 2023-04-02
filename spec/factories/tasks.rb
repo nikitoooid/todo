@@ -10,6 +10,10 @@ FactoryBot.define do
       title { nil }
     end
 
+    trait :done do
+      is_done { true }
+    end
+
     trait :new do
       title { 'New title' }
       description { 'New description' }
