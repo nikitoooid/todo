@@ -1,0 +1,2 @@
+document.querySelector(`#task_<%= @task.id %>`).insertAdjacentHTML('afterend', '<%= j render @task %>');
+document.querySelector(`#task_<%= @task.id %>`).remove();

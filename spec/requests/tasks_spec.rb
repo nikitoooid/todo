@@ -246,4 +246,80 @@ RSpec.describe 'Tasks' do
       end
     end
   end
+
+  describe 'PATCH /tasks/:id/change_status' do
+    context 'when author is authenticated' do
+      it "changes task's is_done status" do
+        user = create(:user)
+        task = create(:task, user: user)
+
+        sign_in(user)
+        expect { patch change_status_task_path(task), headers: { "HTTP_ACCEPT" => "text/javascript" } }.to change { task.reload.is_done? }
+      end
+
+      it 'renders change_status view' do
+        user = create(:user)
+        task = create(:task, user: user)
+
+        sign_in(user)
+        patch change_status_task_path(task), headers: { "HTTP_ACCEPT" => "text/javascript" }
+
+        expect(response).to render_template :change_status
+      end
+
+      it 'returns http success' do
+        user = create(:user)
+        task = create(:task, user: user)
+
+        sign_in(user)
+        patch change_status_task_path(task), headers: { "HTTP_ACCEPT" => "text/javascript" }
+
+        expect(response).to have_http_status(:success)
+      end
+    end
+
+    context 'when another user is authenticated' do
+      it "does not change task's is_done status" do
+        user = create(:user)
+        task = create(:task, user: user)
+        another_user = create(:user)
+
+        sign_in(another_user)
+        expect { patch change_status_task_path(task), headers: { "HTTP_ACCEPT" => "text/javascript" } }.not_to change { task.reload.is_done? }
+      end
+
+      it 'redirects to all tasks page' do
+        user = create(:user)
+        task = create(:task, user: user)
+        another_user = create(:user)
+
+        sign_in(another_user)
+        patch change_status_task_path(task), headers: { "HTTP_ACCEPT" => "text/javascript" }
+
+        expect(response).to redirect_to(tasks_path)
+      end
+
+      it 'returns status 302' do
+        user = create(:user)
+        task = create(:task, user: user)
+        another_user = create(:user)
+
+        sign_in(another_user)
+        patch change_status_task_path(task), headers: { "HTTP_ACCEPT" => "text/javascript" }
+
+        expect(response).to have_http_status(302)
+      end
+    end
+
+    context 'when user is not authenticated' do
+      it 'returns status 401' do
+        user = create(:user)
+        task = create(:task, user: user)
+
+        patch change_status_task_path(task), headers: { "HTTP_ACCEPT" => "text/javascript" }
+
+        expect(response).to have_http_status(401)
+      end
+    end
+  end
 end

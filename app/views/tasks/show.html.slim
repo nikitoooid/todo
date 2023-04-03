@@ -1,5 +1,10 @@
 div.container
-  div.navbar
-    h1 = @task.title
+  div.pt-3.mb-3
+    div.wrapper.d-flex
+      h1 = @task.title
+      div.d-flex.align-items-center.ms-auto
+        span.badge.bg-secondary in progress
+    - unless @task.due_date.nil?
+      div.badge.bg-warning = "Expires: #{@task.due_date}"
   
-  p = @task.description
+  p.mb-3 = @task.description
