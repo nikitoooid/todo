@@ -20,4 +20,4 @@ The application allows authenticated users to:
 
 ### Tests
 
-The application includes RSpec tests, which can be run using the command rspec from the terminal.
+The application includes RSpec tests, which can be run using the command `rspec spec` from the terminal.
