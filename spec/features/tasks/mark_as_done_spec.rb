@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'User can mark a task as done', "
+describe 'User can mark a task as done', "
   In order to keep track of completed tasks
   As an authenticated user
   I want to be able to mark a task as done
