@@ -16,7 +16,6 @@ describe 'User can mark a task as done', "
       find('.checkbox').click
     end
     expect(page).to have_css("#task_#{task.id}.done")
-    expect(task.reload.is_done).to eq true
+    expect(task.reload.is_done).to be true
   end
 end
-
