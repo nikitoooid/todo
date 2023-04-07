@@ -38,9 +38,9 @@ class TasksController < ApplicationController
   end
 
   def change_status
-    unless @task.change_status
-      redirect_to tasks_path, notice: 'Error in updating.'
-    end
+    return if @task.change_status
+
+    redirect_to tasks_path, notice: 'Error in updating.'
   end
 
   private

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'User can mark a task as done', "
+describe 'User can mark a task as done', "
   In order to keep track of completed tasks
   As an authenticated user
   I want to be able to mark a task as done
@@ -16,7 +16,6 @@ RSpec.feature 'User can mark a task as done', "
       find('.checkbox').click
     end
     expect(page).to have_css("#task_#{task.id}.done")
-    expect(task.reload.is_done).to eq true
+    expect(task.reload.is_done).to be true
   end
 end
-

@@ -23,4 +23,27 @@ RSpec.describe Task do
       expect(task.is_done).to be true
     end
   end
+
+  describe '#overdue?' do
+    it 'returns true if task is overdue' do
+      user = create(:user)
+      task = create(:task, due_date: Date.yesterday, user: user)
+
+      expect(task.overdue?).to be true
+    end
+
+    it 'returns false if task is not overdue' do
+      user = create(:user)
+      task = create(:task, due_date: Date.tomorrow, user: user)
+
+      expect(task.overdue?).to be false
+    end
+
+    it 'returns false if task has not due date' do
+      user = create(:user)
+      task = create(:task, user: user)
+
+      expect(task.overdue?).to be false
+    end
+  end
 end

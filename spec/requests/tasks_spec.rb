@@ -254,7 +254,7 @@ RSpec.describe 'Tasks' do
         task = create(:task, user: user)
 
         sign_in(user)
-        expect { patch change_status_task_path(task), headers: { "HTTP_ACCEPT" => "text/javascript" } }.to change { task.reload.is_done? }
+        expect { patch change_status_task_path(task), headers: { 'HTTP_ACCEPT' => 'text/javascript' } }.to change { task.reload.is_done? }
       end
 
       it 'renders change_status view' do
@@ -262,7 +262,7 @@ RSpec.describe 'Tasks' do
         task = create(:task, user: user)
 
         sign_in(user)
-        patch change_status_task_path(task), headers: { "HTTP_ACCEPT" => "text/javascript" }
+        patch change_status_task_path(task), headers: { 'HTTP_ACCEPT' => 'text/javascript' }
 
         expect(response).to render_template :change_status
       end
@@ -272,7 +272,7 @@ RSpec.describe 'Tasks' do
         task = create(:task, user: user)
 
         sign_in(user)
-        patch change_status_task_path(task), headers: { "HTTP_ACCEPT" => "text/javascript" }
+        patch change_status_task_path(task), headers: { 'HTTP_ACCEPT' => 'text/javascript' }
 
         expect(response).to have_http_status(:success)
       end
@@ -285,7 +285,7 @@ RSpec.describe 'Tasks' do
         another_user = create(:user)
 
         sign_in(another_user)
-        expect { patch change_status_task_path(task), headers: { "HTTP_ACCEPT" => "text/javascript" } }.not_to change { task.reload.is_done? }
+        expect { patch change_status_task_path(task), headers: { 'HTTP_ACCEPT' => 'text/javascript' } }.not_to change { task.reload.is_done? }
       end
 
       it 'redirects to all tasks page' do
@@ -294,7 +294,7 @@ RSpec.describe 'Tasks' do
         another_user = create(:user)
 
         sign_in(another_user)
-        patch change_status_task_path(task), headers: { "HTTP_ACCEPT" => "text/javascript" }
+        patch change_status_task_path(task), headers: { 'HTTP_ACCEPT' => 'text/javascript' }
 
         expect(response).to redirect_to(tasks_path)
       end
@@ -305,9 +305,9 @@ RSpec.describe 'Tasks' do
         another_user = create(:user)
 
         sign_in(another_user)
-        patch change_status_task_path(task), headers: { "HTTP_ACCEPT" => "text/javascript" }
+        patch change_status_task_path(task), headers: { 'HTTP_ACCEPT' => 'text/javascript' }
 
-        expect(response).to have_http_status(302)
+        expect(response).to have_http_status(:found)
       end
     end
 
@@ -316,9 +316,9 @@ RSpec.describe 'Tasks' do
         user = create(:user)
         task = create(:task, user: user)
 
-        patch change_status_task_path(task), headers: { "HTTP_ACCEPT" => "text/javascript" }
+        patch change_status_task_path(task), headers: { 'HTTP_ACCEPT' => 'text/javascript' }
 
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(:unauthorized)
       end
     end
   end

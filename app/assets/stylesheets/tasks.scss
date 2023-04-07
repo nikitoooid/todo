@@ -4,3 +4,6 @@
 .task.done .task-title {
   text-decoration: line-through;
 }
+.task.overdue {
+  background-color: #ff7272;
+}
