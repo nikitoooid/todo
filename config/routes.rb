@@ -4,5 +4,6 @@ Rails.application.routes.draw do
 
   resources :tasks do
     member { patch :change_status }
+    collection { get :search }
   end
 end

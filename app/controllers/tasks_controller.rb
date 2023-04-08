@@ -1,9 +1,15 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_task, only: %i[show edit update destroy change_status]
+  skip_before_action :verify_authenticity_token, if: -> { Rails.env.test? }
 
   def index
     @tasks = current_user.tasks
+    sort_tasks
+  end
+
+  def search
+    @tasks = current_user.tasks.where('title LIKE :q OR description LIKE :q', q: "%#{params[:q]}%")
     sort_tasks
   end
 
@@ -70,6 +76,7 @@ class TasksController < ApplicationController
       sort_by = session[:sort_by]
     end
 
+    @tasks = @tasks.order(is_done: :asc) if sort_by == 'status'
     @tasks = @tasks.order(title: :asc) if sort_by == 'title'
     @tasks = @tasks.order(due_date: :asc) if sort_by == 'due_date'
   end

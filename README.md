@@ -10,6 +10,7 @@ The application allows authenticated users to:
 * Set deadlines for tasks and see the remaining time until the deadline or how long the task is overdue
 * Mark tasks as done or not done
 * Sort tasks by title or due date
+* Search tasks by keywods
 
 ### Installation
 
