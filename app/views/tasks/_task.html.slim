@@ -1,18 +1,15 @@
-li class="list-group-item d-flex task#{task.is_done ? ' done' : ''}#{task.overdue? ? ' overdue' : ''}" id="task_#{task.id}"
-  span.d-flex.align-items-center
+
+
+tr class="task#{task.is_done ? ' done' : ''}#{task.overdue? ? ' overdue' : ''}" id="task_#{task.id}"
+  td
     = link_to change_status_task_path(task), method: :patch, remote: true, class: 'checkbox form-check' do
       = radio_button_tag '', '', task.is_done, class: 'form-check-input', disabled: true
-
-  = link_to task.title, task_path(task), class: 'task-title link-dark lead me-2'
-  - unless task.due_date.nil?
-    div.d-flex.align-items-center
-      - if task.overdue?
-        span.badge.bg-danger = "Overdue from: #{task.due_date}"
-      - else
-        span.badge.bg-warning = "Due on: #{task.due_date}"
-
-  - if current_user.author_of?(task)
-    span.ms-auto
-    = link_to 'Delete', task_path(task), method: :delete, data: { confirm: 'Are you sure?' }
-    span.ms-2.me-2 |
-    = link_to 'Edit', edit_task_path(task)
+  td
+    = link_to task.title, task_path(task), class: 'task-title link-dark lead me-2'
+  td
+    span class="badge task-due-date bg-#{task.overdue? ? 'danger' : 'warning'}" = task.due_date.to_s
+  td
+    - if current_user.author_of?(task)
+      = link_to 'Delete', task_path(task), method: :delete, data: { confirm: 'Are you sure?' }
+      span.ms-2.me-2 |
+      = link_to 'Edit', edit_task_path(task)

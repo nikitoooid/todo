@@ -12,6 +12,15 @@ RSpec.describe 'Tasks' do
         expect(response).to have_http_status(:success)
       end
 
+      it 'renders index view' do
+        user = create(:user)
+
+        sign_in(user)
+        get tasks_path
+
+        expect(response).to render_template(:index)
+      end
+
       it "displays user's tasks" do
         user = create(:user)
         tasks = create_list(:task, 3, user: user)
@@ -22,6 +31,17 @@ RSpec.describe 'Tasks' do
         tasks.each do |task|
           expect(response.body).to include(task.title)
         end
+      end
+
+      it 'displays tasks in the correct order' do
+        user = create(:user)
+        create(:task, title: 'Task 2', user: user)
+        create(:task, title: 'Task 1', user: user)
+
+        sign_in(user)
+        get tasks_path, params: { sort_by: 'title' }
+
+        expect(response.body.index('Task 1')).to be < response.body.index('Task 2')
       end
     end
 

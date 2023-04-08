@@ -3,8 +3,13 @@ FactoryBot.define do
     "Task ##{n}"
   end
 
+  sequence :due_date do |n|
+    Time.zone.today + n.days
+  end
+
   factory :task do
     title
+    due_date
 
     trait :invalid do
       title { nil }

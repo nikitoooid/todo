@@ -4,6 +4,7 @@ class TasksController < ApplicationController
 
   def index
     @tasks = current_user.tasks
+    sort_tasks
   end
 
   def show; end
@@ -58,5 +59,18 @@ class TasksController < ApplicationController
     return if current_user&.author_of?(task)
 
     redirect_to tasks_path, alert: 'You are not authorized to perform this action.'
+  end
+
+  def sort_tasks
+    sort_by = params[:sort_by]
+
+    if sort_by.present?
+      session[:sort_by] = sort_by
+    elsif session[:sort_by].present?
+      sort_by = session[:sort_by]
+    end
+
+    @tasks = @tasks.order(title: :asc) if sort_by == 'title'
+    @tasks = @tasks.order(due_date: :asc) if sort_by == 'due_date'
   end
 end

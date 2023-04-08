@@ -8,6 +8,6 @@ class Task < ApplicationRecord
   end
 
   def overdue?
-    due_date.present? && !is_done && due_date < Time.current
+    due_date.present? && !is_done && due_date < Time.zone.today
   end
 end
