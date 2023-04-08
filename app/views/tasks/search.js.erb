@@ -1,0 +1,6 @@
+<% if @tasks.any? %>
+  document.querySelector('.tasks-table tbody').innerHTML = "<%= j render @tasks %>"
+<% else %>
+  document.querySelector('.tasks-table tbody').innerHTML = ""
+  document.querySelector('.tasks-table tbody').insertAdjacentHTML('beforeend', '<p>No tasks found</p>')
+<% end %>

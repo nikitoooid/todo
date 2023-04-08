@@ -342,4 +342,38 @@ RSpec.describe 'Tasks' do
       end
     end
   end
+
+  describe 'GET /tasks/search' do
+    context 'when authenticated user performs a search' do
+      it 'returns http success' do
+        user = create(:user)
+        create(:task, title: 'Test task', user: user)
+
+        sign_in(user)
+        get search_tasks_path, params: { q: 'test' }, headers: { 'HTTP_ACCEPT' => 'text/javascript' }
+
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'displays search results' do
+        user = create(:user)
+        create(:task, title: 'Test task', user: user)
+
+        sign_in(user)
+        get search_tasks_path, params: { q: 'test' }, headers: { 'HTTP_ACCEPT' => 'text/javascript' }
+
+        expect(response.body).to include('Test task')
+      end
+    end
+
+    context 'when user is not authenticated' do
+      it 'returns unauthorized' do
+        user = create(:user)
+        create(:task, title: 'Test task', user: user)
+
+        get search_tasks_path, params: { q: 'test' }, headers: { 'HTTP_ACCEPT' => 'text/javascript' }
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
 end
