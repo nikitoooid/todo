@@ -9,7 +9,7 @@ The application allows authenticated users to:
 * Create, read, update, and delete tasks
 * Set deadlines for tasks and see the remaining time until the deadline or how long the task is overdue
 * Mark tasks as done or not done
-* Sort tasks by title or due date
+* Sort tasks by title, status or due date
 * Search tasks by keywods
 
 ### Installation
